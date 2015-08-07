@@ -1,16 +1,20 @@
 package com.globalradio.mo.web;
 
+import com.globalradio.mo.data.InvalidDateFormatException;
 import com.globalradio.mo.data.InvalidRssFeedException;
-import com.globalradio.mo.domain.Rss;
-import com.globalradio.mo.service.RssFeedService;
-import com.sun.syndication.io.FeedException;
+import com.globalradio.mo.domain.Feed;
+import com.globalradio.mo.service.*;
+import com.globalradio.mo.service.NotFoundException;
+import com.globalradio.mo.utils.RestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.xml.sax.SAXException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 @Component
@@ -33,14 +37,10 @@ public class RSSFeedResourceService {
     @Path("/latest")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRssResourcesByLatest() {
-        Rss rss = null;
+        Feed rss = null;
         try {
             rss = rssFeedService.getRssFeedPodcasts(true);
-        } catch (InvalidRssFeedException e) {
-            getErrorResponse(e);
-        } catch (IOException e) {
-            getErrorResponse(e);
-        } catch (FeedException e) {
+        } catch (InvalidRssFeedException | ParserConfigurationException | InvalidDateFormatException | SAXException | IOException e) {
             getErrorResponse(e);
         }
         return Response
@@ -51,14 +51,10 @@ public class RSSFeedResourceService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRssResources() {
-        Rss rss = null;
+        Feed rss = null;
         try {
             rss = rssFeedService.getRssFeedPodcasts(false);
-        } catch (InvalidRssFeedException e) {
-            getErrorResponse(e);
-        } catch (IOException e) {
-            getErrorResponse(e);
-        } catch (FeedException e) {
+        } catch (InvalidRssFeedException | ParserConfigurationException | InvalidDateFormatException | SAXException | IOException e) {
             getErrorResponse(e);
         }
         return Response
@@ -70,47 +66,60 @@ public class RSSFeedResourceService {
     @Path("{id}/alternate")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRssResourcesAlternate(@PathParam("id") String id) {
-        Rss rss = null;
+        Feed rss = null;
+        RssRepresentation rssRepresentation;
         try {
             rss = rssFeedService.getRssFeedPodcastById(id, true);
-        } catch (InvalidRssFeedException e) {
+        } catch (InvalidRssFeedException | ParserConfigurationException | InvalidDateFormatException | SAXException | NotFoundException | IOException e) {
             getErrorResponse(e);
-        } catch (IOException e) {
-            getErrorResponse(e);
-        } catch (FeedException e) {
-            getErrorResponse(e);
+        }
+        if (rss.getPodcasts() == null || rss.getPodcasts().size() == 0) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            rssRepresentation = RestUtils.getRssfeedRepresentation(rss);
         }
         return Response
                 .status(Response.Status.OK)
-                .entity(RestUtils.getRssfeedRepresentation(rss)).build();
+                .entity(rssRepresentation).build();
+
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRssResourceById(@PathParam("id") String id) {
-        Rss rss = null;
+        Feed rss = null;
+        RssRepresentation rssRepresentation;
         try {
             rss = rssFeedService.getRssFeedPodcastById(id, false);
-        } catch (InvalidRssFeedException e) {
+        } catch (InvalidRssFeedException | ParserConfigurationException | InvalidDateFormatException | SAXException | IOException | NotFoundException e) {
             getErrorResponse(e);
-        } catch (IOException e) {
-            getErrorResponse(e);
-        } catch (FeedException e) {
-            getErrorResponse(e);
+        }
+        if (rss.getPodcasts() == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            rssRepresentation = RestUtils.getRssfeedRepresentation(rss);
         }
         return Response
                 .status(Response.Status.OK)
-                .entity(RestUtils.getRssfeedRepresentation(rss)).build();
+                .entity(rssRepresentation).build();
     }
 
     private Response getErrorResponse(Exception e) {
-        logger.error(e.getMessage(), e);
-        ServiceErrorRepresentation errorRepresentation = new ServiceErrorRepresentation(
-                Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                "something went horrible wrong on the server side");
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRepresentation).build();
+        if (e.getClass().isInstance(NotFoundException.class)) {
+            logger.info(e.getMessage(), e);
+            ServiceErrorRepresentation errorRepresentation = new ServiceErrorRepresentation(
+                    Response.Status.NOT_FOUND.getStatusCode(),
+                    e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).entity(errorRepresentation).build();
+
+        } else {
+            logger.error(e.getMessage(), e);
+            ServiceErrorRepresentation errorRepresentation = new ServiceErrorRepresentation(
+                    Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                    "something went horrible wrong on the server side");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRepresentation).build();
+        }
     }
 
 }
-

@@ -15,7 +15,7 @@ public class PodcastRepresentation {
 
     @XmlRootElement(name = "enclosure")
     @XmlType(propOrder = {"url", "type", "length"})
-    class Enclosure {
+    public class Enclosure {
         private String url;
         private String type;
         private long length;
@@ -53,7 +53,6 @@ public class PodcastRepresentation {
             this.length = length;
         }
     }
-
 
     private String guid;
     private boolean isPermaLink;
@@ -104,8 +103,8 @@ public class PodcastRepresentation {
         return pubDate;
     }
 
-    public void setPubDate(Date pubDate) {
-        this.pubDate = SIMPLE_DATE_FORMAT.format(pubDate);
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
     }
 
     @XmlElement(name = "enclosure")

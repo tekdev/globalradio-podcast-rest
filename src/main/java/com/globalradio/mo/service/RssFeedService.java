@@ -1,15 +1,16 @@
 package com.globalradio.mo.service;
 
 
+import com.globalradio.mo.data.InvalidDateFormatException;
 import com.globalradio.mo.data.InvalidRssFeedException;
-import com.globalradio.mo.domain.Rss;
-import com.sun.syndication.io.FeedException;
+import com.globalradio.mo.domain.Feed;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 public interface RssFeedService {
+    Feed getRssFeedPodcastById(String id, boolean alternate) throws ParserConfigurationException, InvalidDateFormatException, SAXException, IOException, InvalidRssFeedException, NotFoundException;
 
-    public Rss getRssFeedPodcastById(String id, boolean alternate) throws InvalidRssFeedException, IOException, FeedException;
-
-    public Rss getRssFeedPodcasts(boolean latest) throws InvalidRssFeedException, IOException, FeedException;
+    Feed getRssFeedPodcasts(boolean latest) throws ParserConfigurationException, InvalidDateFormatException, SAXException, IOException, InvalidRssFeedException;
 }

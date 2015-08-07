@@ -1,13 +1,6 @@
 package com.globalradio.mo.domain;
 
-import org.jdom.Namespace;
-
 public class Itune {
-
-    // TODO move the URL to application.yml
-    private static final String URI = "http://www.itunes.com/dtds/podcast-1.0.dtd";
-    public static final Namespace ITUNE_NS = Namespace.getNamespace("itunes", URI);
-
     private String subtitle;
     private String author;
     private String summary;

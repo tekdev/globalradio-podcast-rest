@@ -11,6 +11,7 @@ public class Podcast {
     private Date pubDate;
     private Enclosure enclosure;
     private Itune itune;
+    private String author;
 
     public String getId() {
         return id;
@@ -66,5 +67,13 @@ public class Podcast {
 
     public void setItune(Itune itune) {
         this.itune = itune;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+        <title>channel title</title>
+        <link>http://www.xfm.co.uk/</link>
+        <description>channel description</description>
+        <language>en</language>
+        <copyright>XFM</copyright>
+        <itunes:subtitle>channel itune subtitle</itunes:subtitle>
+        <itunes:author>Xfm</itunes:author>
+        <itunes:summary>some summary</itunes:summary>
+        <itunes:image href="http://dummy-url.com/me.jpeg"/>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:new-feed-url>http://dummy-url.com</itunes:new-feed-url>
+        <itunes:owner>
+            <itunes:name>Xfm</itunes:name>
+            <itunes:email>dummy@xfm.co.uk</itunes:email>
+        </itunes:owner>
+        <itunes:category text="Comedy"/>
+        <item>
+            <guid isPermaLink="false">1</guid>
+            <author>item author1</author>
+            <title>item title1</title>
+            <description>item description1</description>
+            <pubDate>Thu, 30 Jul 2015 23:00:00 GMT</pubDate>
+            <enclosure
+                    url="http://dummy-url.com1"
+                    type="audio/mpeg" length="38746591"/>
+            <itunes:subtitle>item itune subtitle1</itunes:subtitle>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:summary>item itune summary1</itunes:summary>
+            <itunes:duration>0:26:53</itunes:duration>
+        </item>
+        <item>
+            <guid isPermaLink="false">2</guid>
+            <author>item author2</author>
+            <title>item title2</title>
+            <description>item description2</description>
+            <pubDate>Thu, 30 Jul 2015 23:00:00 GMT</pubDate>
+            <enclosure
+                    url="http://dummy-url.com2"
+                    type="audio/mpeg" length="38746591"/>
+            <itunes:subtitle>item itune subtitle2</itunes:subtitle>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:summary>item itune summary2</itunes:summary>
+            <itunes:duration>0:26:53</itunes:duration>
+        </item>
+        <item>
+            <guid isPermaLink="false">3</guid>
+            <author>item author3</author>
+            <title>item title3</title>
+            <description>item description3</description>
+            <pubDate>Thu, 30 Jul 2015 23:00:00 GMT</pubDate>
+            <enclosure
+                    url="http://dummy-url.com3"
+                    type="audio/mpeg" length="38746591"/>
+            <itunes:subtitle>item itune subtitle3</itunes:subtitle>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:summary>item itune summary3</itunes:summary>
+            <itunes:duration>0:26:53</itunes:duration>
+        </item>
+        <item>
+            <guid isPermaLink="false">4</guid>
+            <author>item author4</author>
+            <title>item title4</title>
+            <description>item description4</description>
+            <pubDate>Thu, 30 Jul 2015 23:00:00 GMT</pubDate>
+            <enclosure
+                    url="http://dummy-url.com4"
+                    type="audio/mpeg" length="38746591"/>
+            <itunes:subtitle>item itune subtitle4</itunes:subtitle>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:summary>item itune summary4</itunes:summary>
+            <itunes:duration>0:26:53</itunes:duration>
+        </item>
+        <item>
+            <guid isPermaLink="false">5</guid>
+            <author>item author5</author>
+            <title>item title5</title>
+            <description>item description5</description>
+            <pubDate>Thu, 30 Jul 2015 23:00:00 GMT</pubDate>
+            <enclosure
+                    url="http://dummy-url.com5"
+                    type="audio/mpeg" length="38746591"/>
+            <itunes:subtitle>item itune subtitle5</itunes:subtitle>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:summary>item itune summary5</itunes:summary>
+            <itunes:duration>0:26:53</itunes:duration>
+        </item>
+    </channel>
+</rss>
